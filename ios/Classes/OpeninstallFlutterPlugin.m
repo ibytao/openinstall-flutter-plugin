@@ -25,6 +25,7 @@ static FlutterMethodChannel * FLUTTER_METHOD_CHANNEL;
     OpeninstallFlutterPlugin* instance = [[OpeninstallFlutterPlugin alloc] init];
     instance.flutterMethodChannel = channel;
     [registrar addMethodCallDelegate:instance channel:channel];
+    [registrar addApplicationDelegate:instance];
 }
 
 - (instancetype)init {
@@ -142,6 +143,22 @@ static FlutterMethodChannel * FLUTTER_METHOD_CHANNEL;
 
 + (BOOL)continueUserActivity:(NSUserActivity *) userActivity {
     return [OpenInstallSDK continueUserActivity:userActivity];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    if ([OpenInstallSDK handLinkURL:url]) {
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    if  ([OpenInstallSDK handLinkURL:url]){
+        return YES;
+    }
+    return NO;
 }
 
 @end

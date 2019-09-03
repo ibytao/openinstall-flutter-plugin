@@ -38,7 +38,7 @@ public class OpeninstallFlutterPlugin implements MethodCallHandler {
             @java.lang.Override
             public boolean onNewIntent(android.content.Intent intent) {
                 OpenInstall.getWakeUp(intent, wakeUpAdapter);
-                return true;
+                return false;
             }
         });
 
